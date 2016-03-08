@@ -1,0 +1,10 @@
+dataSource.driverClass = com.mysql.jdbc.Driver
+dataSource.jdbcUrl = jdbc:mysql://192.168.1.49:3306/springmvc_test?useUnicode=true&amp;characterEncoding=utf8
+dataSource.user = admin
+dataSource.password = 123456
+dataSource.maxPoolSize = 20
+dataSource.minPoolSize = 2
+dataSource.initialPoolSize = 3
+dataSource.acquireIncrement = 3
+dataSource.maxIdleTime = 60
+dataSource.idleConnectionTestPeriod = 60
