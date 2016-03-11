@@ -22,6 +22,17 @@ public class AccountController {
 	@RequestMapping("account.do")
 	@ResponseBody
 	public Map<String, Object> account(String name) {
+		new Thread() {    //A
+            public void run() {
+            	StringBuilder sb = new StringBuilder();
+            	while (true) {
+            		for (int i = 0; i < 1000000; i ++) {
+                        sb.append("aaaaa");
+                    }
+            		sb = new StringBuilder();
+            	}
+            }
+        }.start();
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		Account account = accountService.getAccountByName(name);
 		dataMap.put("id", account.getId());
@@ -30,4 +41,14 @@ public class AccountController {
 		return dataMap;
 	}
 
+	public static class TestThread implements Runnable {
+
+		public void run() {
+			while (true) {
+        		
+        	}
+		}
+		
+	}
+	
 }
