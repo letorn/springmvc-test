@@ -6,8 +6,46 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   
+  <profiles>
+    <profile>
+      <id>development</id>
+      <properties>
+        <mysql.host>localhost</mysql.host>
+        <mysql.port>3306</mysql.port>
+        <mysql.database>springmvc_test</mysql.database>
+        <mysql.user>admin</mysql.user>
+        <mysql.password>123456</mysql.password>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>test</id>
+      <properties>
+        <mysql.host>localhost</mysql.host>
+        <mysql.port>3306</mysql.port>
+        <mysql.database>springmvc_test</mysql.database>
+        <mysql.user>admin</mysql.user>
+        <mysql.password>123456</mysql.password>
+      </properties>
+    </profile>
+    <profile>
+      <id>production</id>
+      <properties>
+        <mysql.host>localhost</mysql.host>
+        <mysql.port>3306</mysql.port>
+        <mysql.database>springmvc_test</mysql.database>
+        <mysql.user>admin</mysql.user>
+        <mysql.password>123456</mysql.password>
+      </properties>
+    </profile>
+  </profiles>
+  
   <build>
+    <finalName>springmvc-test</finalName>
     <sourceDirectory>src</sourceDirectory>
+    <outputDirectory>target/classes</outputDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -26,16 +64,36 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>dao/mapper/*.xml</include>
+          <include>applicationContext.xml</include>
+          <!-- <include>bean.overrides</include> -->
+          <include>log4j.properties</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
   
   <dependencies>
+    <!-- 编译时使用 -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Spring MVC -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <version>4.2.5.RELEASE</version>
     </dependency>
-    
+
     <!-- Spring JDBC -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -44,17 +102,42 @@
     </dependency>
     
     <!-- MyBatis -->
-    <dependency>  
-      <groupId>org.mybatis</groupId>  
-      <artifactId>mybatis</artifactId>  
-      <version>3.3.1</version>  
-    </dependency>  
-    <dependency>  
-      <groupId>org.mybatis</groupId>  
-      <artifactId>mybatis-spring</artifactId>  
-      <version>1.2.4</version>  
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.3.1</version>
     </dependency>
-    
+
+    <!-- Spring与MyBatic整合 -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.2.4</version>
+    </dependency>
+
+    <!-- Hibernate -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>4.3.11.Final</version>
+    </dependency>
+
+    <!-- Spring与Hibernate整合 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>4.2.5.RELEASE</version>
+    </dependency>
+
+    <!-- AOP切面 -->
+    <!--
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.8.5</version>
+    </dependency>
+    -->
+
     <!-- MySQL -->
     <dependency>
       <groupId>mysql</groupId>

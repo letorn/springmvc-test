@@ -19,8 +19,8 @@ public class AccountServiceImpl implements AccountService {
 	private AccountDAO accountDAO;
 
 	@Cacheable(value = "accountCache")
-	public Account getAccountByName(String accountName) {
-		return accountDAO.getAccountByName(accountName);
+	public Account getByName(String accountName) {
+		return accountDAO.getByName(accountName);
 	}
 
 	@CacheEvict(value = "accountCache", key = "#account.getName()")

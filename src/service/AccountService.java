@@ -4,7 +4,7 @@ import pojo.Account;
 
 public interface AccountService {
 
-	public Account getAccountByName(String accountName);
+	public Account getByName(String name);
 
 	public void updateAccount(Account account);
 

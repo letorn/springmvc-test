@@ -15,11 +15,18 @@
 		  alert(JSON.stringify(data));
 	  });
   }
+  
+  function anRoleClick() {
+	  $.getJSON('role/role.do?id=1', function(data) {
+		  alert(JSON.stringify(data));
+	  });
+  }
 </script>
 </head>
 <body>
   <h1>Index</h1>
   <a href="javascript:pagedUsersClick()">Paged Users</a>&nbsp;
-  <a href="javascript:anAccountClick()">An Account</a>
+  <a href="javascript:anAccountClick()">An Account</a>&nbsp;
+  <a href="javascript:anRoleClick()">An Role</a>&nbsp;
 </body>
 </html>

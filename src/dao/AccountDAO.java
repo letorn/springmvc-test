@@ -6,7 +6,7 @@ import pojo.Account;
 
 public interface AccountDAO {
 
-	public Account getAccountByName(String accountName);
+	public Account getByName(String name);
 
 	public List<Account> find(Integer start, Integer limit);
 

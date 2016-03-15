@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.AccountMapper">
 
-  <select id="getAccountByName" parameterType="String" resultType="pojo.Account">
-    select * from account where name = #{accountName} limit 1
+  <select id="getByName" parameterType="String" resultType="pojo.Account">
+    select * from account where name = #{name} limit 1
   </select>
           
 </mapper>

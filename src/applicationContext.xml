@@ -5,6 +5,8 @@
   xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
   xmlns:cache="http://www.springframework.org/schema/cache"
   xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
   xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -15,17 +17,23 @@
     http://www.springframework.org/schema/cache
     http://www.springframework.org/schema/cache/spring-cache.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
   <!-- 从属性文件中读取属性值,以替代受管Bean的定义 -->
+  <!--
   <context:property-override location="classpath:bean.overrides" />
+  -->
 
   <!-- 数据库连接池c3p0配置 -->
   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
     <property name="driverClass" value="com.mysql.jdbc.Driver" />
-    <property name="jdbcUrl" value="jdbc:mysql://192.168.1.49:3306/springmvc_test?useUnicode=true&amp;characterEncoding=utf8" />
-    <property name="user" value="admin" />
-    <property name="password" value="123456" />
+    <property name="jdbcUrl" value="jdbc:mysql://${mysql.host}:${mysql.port}/${mysql.database}?useUnicode=true&amp;characterEncoding=utf8" />
+    <property name="user" value="${mysql.user}" />
+    <property name="password" value="${mysql.password}" />
     <property name="maxPoolSize" value="20" />
     <property name="minPoolSize" value="2" />
     <property name="initialPoolSize" value="3" />
@@ -57,17 +65,75 @@
     <!-- 加载映射文件 -->
     <property name="mapperLocations" value="classpath:dao/mapper/*.xml" />  
   </bean>
-  
+
   <!-- 创建MyBatis Bean -->
   <mybatis:scan base-package="dao.mapper" />
+
+  <!-- Spring和Hibernate整合 -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <!-- 自动扫描注解方式配置的hibernate类文件 -->
+    <property name="packagesToScan">
+      <list>
+        <value>pojo</value>
+      </list>
+    </property>
+      <property name="hibernateProperties">
+        <props>
+          <prop key="hibernate.hbm2ddl.auto">update</prop>
+          <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+          <prop key="hibernate.show_sql">true</prop>
+          <prop key="connection.useUnicode">true</prop>
+          <prop key="connection.characterEncoding">UTF-8</prop>
+        </props>
+      </property>
+  </bean>
+
+  <!-- 配置事务管理器 -->
+  <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+
+  <!-- 配置事务通知属性 -->
+  <!--
+  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+      <tx:method name="insert*" propagation="REQUIRED" />
+      <tx:method name="update*" propagation="REQUIRED" />
+      <tx:method name="edit*" propagation="REQUIRED" />
+      <tx:method name="save*" propagation="REQUIRED" />
+      <tx:method name="add*" propagation="REQUIRED" />
+      <tx:method name="new*" propagation="REQUIRED" />
+      <tx:method name="set*" propagation="REQUIRED" />
+      <tx:method name="remove*" propagation="REQUIRED" />
+      <tx:method name="delete*" propagation="REQUIRED" />
+      <tx:method name="change*" propagation="REQUIRED" />
+      <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+      <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+      <tx:method name="load*" propagation="REQUIRED" read-only="true" />
+      <tx:method name="*" propagation="REQUIRED" read-only="true" />
+    </tx:attributes>
+  </tx:advice>
+  -->
   
+  <!-- 配置事务切面 -->
+  <!--
+  <aop:config>
+    <aop:pointcut id="serviceOperation" expression="execution(* service..*.*(..))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+  </aop:config>
+  -->
+
+  <context:component-scan base-package="pojo" />
   <context:component-scan base-package="dao.impl" />
   <context:component-scan base-package="service.impl" />
   <context:component-scan base-package="controller" />
 
-  <!-- 支持MVC -->
+  <!-- 支持MVC注释 -->
   <mvc:annotation-driven />
-  <!-- 支持缓存 -->
+  <!-- 支持缓存注释 -->
   <cache:annotation-driven />
+  <!-- 支持事务注释 -->
+  <tx:annotation-driven /> 
 
 </beans>

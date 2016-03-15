@@ -19,8 +19,8 @@ public class AccountDAOImpl implements AccountDAO {
 	@Resource
 	private AccountMapper accountMapper;
 
-	public Account getAccountByName(String accountName) {
-		return accountMapper.getAccountByName(accountName);
+	public Account getByName(String name) {
+		return accountMapper.getByName(name);
 	}
 
 	public List<Account> find(Integer start, Integer limit) {

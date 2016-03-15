@@ -1,6 +1,6 @@
 dataSource.driverClass = com.mysql.jdbc.Driver
-dataSource.jdbcUrl = jdbc:mysql://192.168.1.49:3306/springmvc_test?useUnicode=true&amp;characterEncoding=utf8
-dataSource.user = admin
+dataSource.jdbcUrl = jdbc:mysql://localhost:3306/springmvc_test?useUnicode=true&amp;characterEncoding=utf8
+dataSource.user = ${dataSource.user}
 dataSource.password = 123456
 dataSource.maxPoolSize = 20
 dataSource.minPoolSize = 2
