@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.mapper.UserMapper">
+
+  <resultMap id="userWithAccountsMap" type="pojo.User">
+    <id property="id" column="id" />
+    <result property="name" column="name" />
+    <result property="birth" column="birth" />
+    <result property="roleId" column="role_id" />
+    <collection property="accounts" ofType="pojo.Account" column="id" select="findAccountByUserId" />
+  </resultMap>
+
+  <select id="findAccountByUserId" parameterType="Integer" resultType="pojo.Account">
+    select * from account where user_id = #{user_id}
+  </select>
+
+  <select id="get" parameterType="Integer" resultType="pojo.User" resultMap="userWithAccountsMap">
+    select * from user where id = #{id} limit 1
+  </select>
+          
+</mapper>

@@ -2,6 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.AccountMapper">
 
+  <resultMap id="userMap" type="pojo.User">
+    <id property="id" column="user_id" />
+    <result property="name" column="user_name" />
+    <result property="birth" column="user_birth" />
+    <result property="roleId" column="user_role_id" />
+  </resultMap>
+
+  <resultMap id="accountWithUserMap" type="pojo.Account">
+    <id property="id" column="id" />
+    <result property="name" column="name" />
+    <result property="password" column="password" />
+    <result property="userId" column="user_id" />
+    <!-- <association>标签体现的是多对一关联关系 -->
+    <association property="user" javaType="pojo.User" resultMap="userMap" />
+  </resultMap>
+
+  <select id="get" parameterType="Integer" resultType="pojo.Account" resultMap="accountWithUserMap">
+    select
+      a.*, u.name user_name, u.birth user_birth, u.role_id user_role_id
+    from account a
+    join user u on a.user_id = u.id
+    where a.id = #{id} limit 1
+  </select>
+
   <select id="getByName" parameterType="String" resultType="pojo.Account">
     select * from account where name = #{name} limit 1
   </select>
