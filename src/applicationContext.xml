@@ -85,6 +85,14 @@
           <prop key="hibernate.show_sql">true</prop>
           <prop key="connection.useUnicode">true</prop>
           <prop key="connection.characterEncoding">UTF-8</prop>
+          <!-- 二级缓存 -->
+          <prop key="hibernate.cache.use_second_level_cache">true</prop>
+          <!-- 查询缓存 -->
+          <prop key="hibernate.cache.use_query_cache">true</prop>
+          <!-- 设置二级缓存的Provider类 -->
+          <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+          <!-- 设置缓存的配置文件路径 -->
+          <!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">classpath:ehcache.xml</prop> -->
         </props>
       </property>
   </bean>

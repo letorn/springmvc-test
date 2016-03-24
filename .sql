@@ -23,3 +23,7 @@ insert into account(id, name, password) values(2, 'admin', 'admin');
 insert into account(id, name, password) values(3, 'admin', 'admin');
 insert into account(id, name, password) values(4, 'admin', 'admin');
 insert into account(id, name, password) values(5, 'admin', 'admin');
+
+-- insert into role(id, name) values(1, 'admin');
+-- insert into role(id, name) values(2, 'manager');
+-- insert into role(id, name) values(3, 'guest');

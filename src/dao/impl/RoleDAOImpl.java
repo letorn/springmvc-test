@@ -32,4 +32,9 @@ public class RoleDAOImpl implements RoleDAO {
 		return ((Long) sessionFactory.getCurrentSession().createQuery("select count(1) from Role").uniqueResult()).intValue();
 	}
 
+	public boolean save(Role role) {
+		sessionFactory.getCurrentSession().save(role);
+		return true;
+	}
+	
 }

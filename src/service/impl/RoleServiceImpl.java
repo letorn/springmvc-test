@@ -19,6 +19,10 @@ public class RoleServiceImpl implements RoleService {
 
 	@Transactional
 	public Role get(Integer id) {
+		Role role = new Role();
+		role.setName("role");
+		roleDAO.save(role);
+		// throw new RuntimeException();// 抛出异常,事务回滚
 		return roleDAO.get(id);
 	}
 

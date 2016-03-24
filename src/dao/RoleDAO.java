@@ -11,5 +11,7 @@ public interface RoleDAO {
 	public List<Role> find(Integer start, Integer limit);
 
 	public Integer countAll();
+	
+	public boolean save(Role role);
 
 }
