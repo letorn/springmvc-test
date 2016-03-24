@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.mapper.AccountMapper">
 
+  <!-- 一级缓存 -->
+  <!-- <cache /> -->
+
+  <!-- 二级缓存 -->
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+
   <resultMap id="userMap" type="pojo.User">
     <id property="id" column="user_id" />
     <result property="name" column="user_name" />

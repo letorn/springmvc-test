@@ -1,5 +1,7 @@
 package test;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import dao.mapper.UserMapper;
 @ContextConfiguration({ "/applicationContext.xml" })
 public class MyBatisTest {
 
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
 	@Autowired
 	private AccountMapper accountMapper;
 	@Autowired
@@ -37,6 +41,26 @@ public class MyBatisTest {
 	public void testOneToSome() {
 		User user = userMapper.get(1);
 		System.out.println("user: " + user.getName() + ", accountCount: " + user.getAccounts().size());
+	}
+	
+	@Test
+	public void testFirstLevelCache() {
+		Account account = accountMapper.getByName("admin");
+		Account account2 = accountMapper.getByName("admin");
+		System.out.println("account: " + account.getName());
+		System.out.println("account2: " + account2.getName());
+	}
+	
+	@Test
+	public void testSecondLevelCache() {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		Account account = sqlSession.getMapper(AccountMapper.class).getByName("admin");
+		
+		SqlSession sqlSession2 = sqlSessionFactory.openSession();
+		Account account2 = sqlSession2.getMapper(AccountMapper.class).getByName("admin");
+		
+		System.out.println("account: " + account.getName());
+		System.out.println("account2: " + account2.getName());
 	}
 	
 }

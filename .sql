@@ -9,10 +9,10 @@ create table if not exists account(
   user_id int not null
 );
 insert into account(id, name, password, user_id) values(1, 'admin', 'admin', 1);
-insert into account(id, name, password, user_id) values(2, 'admin', 'admin', 2);
-insert into account(id, name, password, user_id) values(3, 'admin', 'admin', 3);
-insert into account(id, name, password, user_id) values(4, 'admin', 'admin', 4);
-insert into account(id, name, password, user_id) values(5, 'admin', 'admin', 5);
+insert into account(id, name, password, user_id) values(2, 'admin2', 'admin2', 2);
+insert into account(id, name, password, user_id) values(3, 'admin3', 'admin3', 3);
+insert into account(id, name, password, user_id) values(4, 'admin4', 'admin4', 4);
+insert into account(id, name, password, user_id) values(5, 'admin5', 'admin5', 5);
 
 
 drop table if exists user;

@@ -132,6 +132,36 @@
   </aop:config>
   -->
 
+  <!-- ActiveMQ -->
+  <!-- 连接工厂 -->
+  <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="tcp://localhost:61616" />
+  </bean>
+
+  <!-- 消息目标 -->
+  <bean id="jmsDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg index="0" value="subject" />
+  </bean>
+
+  <!-- JMS模板 -->
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsFactory" />
+    <property name="defaultDestination" ref="jmsDestination" />
+    <property name="receiveTimeout" value="10000" />
+  </bean>
+
+  <!-- 消息接收 -->
+  <bean id="jmsListener" class="test.JMSListener" />
+
+  <!-- 消息监听 -->
+  <bean id="jmsListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="jmsFactory" />
+    <property name="messageListener" ref="jmsListener" />
+    <property name="concurrentConsumers" value="10" />
+    <property name="destinationName" value="subject" />
+    <property name="pubSubNoLocal" value="false" />
+  </bean>
+
   <context:component-scan base-package="pojo" />
   <context:component-scan base-package="dao.impl" />
   <context:component-scan base-package="service.impl" />
