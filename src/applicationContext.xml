@@ -134,8 +134,19 @@
 
   <!-- ActiveMQ -->
   <!-- 连接工厂 -->
+  <!--
   <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
     <property name="brokerURL" value="tcp://localhost:61616" />
+  </bean>
+  -->
+  <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+    <property name="connectionFactory">
+      <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="failover://(tcp://localhost:61616)" />
+        <property name="useAsyncSend" value="true" />
+      </bean>
+    </property>
+    <property name="maxConnections" value="100" />
   </bean>
 
   <!-- 消息目标 -->
@@ -148,6 +159,10 @@
     <property name="connectionFactory" ref="jmsFactory" />
     <property name="defaultDestination" ref="jmsDestination" />
     <property name="receiveTimeout" value="10000" />
+    <!-- explicitQosEnabled是否启动deliveryMode配置 -->
+    <property name="explicitQosEnabled" value="true" />
+    <!-- deliveryMode 1 非持久, 2 持久 -->
+    <!-- <property name="deliveryMode" value="2" /> -->
   </bean>
 
   <!-- 消息接收 -->
@@ -159,7 +174,7 @@
     <property name="messageListener" ref="jmsListener" />
     <property name="concurrentConsumers" value="10" />
     <property name="destinationName" value="subject" />
-    <property name="pubSubNoLocal" value="false" />
+    <property name="pubSubDomain" value="false" />
   </bean>
 
   <context:component-scan base-package="pojo" />
