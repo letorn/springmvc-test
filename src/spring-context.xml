@@ -132,51 +132,6 @@
   </aop:config>
   -->
 
-  <!-- ActiveMQ -->
-  <!-- 连接工厂 -->
-  <!--
-  <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-    <property name="brokerURL" value="tcp://localhost:61616" />
-  </bean>
-  -->
-  <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
-    <property name="connectionFactory">
-      <bean class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="failover://(tcp://localhost:61616)" />
-        <property name="useAsyncSend" value="true" />
-      </bean>
-    </property>
-    <property name="maxConnections" value="100" />
-  </bean>
-
-  <!-- 消息目标 -->
-  <bean id="jmsDestination" class="org.apache.activemq.command.ActiveMQQueue">
-    <constructor-arg index="0" value="subject" />
-  </bean>
-
-  <!-- JMS模板 -->
-  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-    <property name="connectionFactory" ref="jmsFactory" />
-    <property name="defaultDestination" ref="jmsDestination" />
-    <property name="receiveTimeout" value="10000" />
-    <!-- explicitQosEnabled是否启动deliveryMode配置 -->
-    <property name="explicitQosEnabled" value="true" />
-    <!-- deliveryMode 1 非持久, 2 持久 -->
-    <!-- <property name="deliveryMode" value="2" /> -->
-  </bean>
-
-  <!-- 消息接收 -->
-  <bean id="jmsListener" class="test.JMSListener" />
-
-  <!-- 消息监听 -->
-  <bean id="jmsListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-    <property name="connectionFactory" ref="jmsFactory" />
-    <property name="messageListener" ref="jmsListener" />
-    <property name="concurrentConsumers" value="10" />
-    <property name="destinationName" value="subject" />
-    <property name="pubSubDomain" value="false" />
-  </bean>
-
   <context:component-scan base-package="pojo" />
   <context:component-scan base-package="dao.impl" />
   <context:component-scan base-package="service.impl" />
@@ -188,5 +143,11 @@
   <cache:annotation-driven />
   <!-- 支持事务注释 -->
   <tx:annotation-driven /> 
+
+  <!-- Logger Advice -->
+  <!-- <import resource="classpath:spring-advice.xml" /> -->
+
+  <!-- ActievMQ -->
+  <!-- <import resource="classpath:spring-activemq.xml" /> -->
 
 </beans>

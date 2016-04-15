@@ -26,4 +26,9 @@ public class RoleServiceImpl implements RoleService {
 		return roleDAO.get(id);
 	}
 
+	/*@Transactional
+	public boolean save(Role role) {
+		return roleDAO.save(role);
+	}*/
+
 }
