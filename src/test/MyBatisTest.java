@@ -15,7 +15,7 @@ import dao.mapper.UserMapper;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/applicationContext.xml" })
+@ContextConfiguration({ "/spring-context.xml" })
 public class MyBatisTest {
 
 	@Autowired

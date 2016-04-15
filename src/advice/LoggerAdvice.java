@@ -11,6 +11,7 @@ public class LoggerAdvice implements AfterReturningAdvice {
 		System.out.println("方法体: " + method.getName());
 		System.out.println("参数值:" + args);
 		System.out.println("目标体:" + target);
+		throw new RuntimeException("日志写入失败！");// 抛出异常,事务回滚
 	}
 
 }

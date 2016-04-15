@@ -78,7 +78,7 @@
         <filtering>true</filtering>
         <includes>
           <include>dao/mapper/*.xml</include>
-          <include>applicationContext.xml</include>
+          <include>spring-*.xml</include>
           <!-- <include>bean.overrides</include> -->
           <include>log4j.properties</include>
         </includes>
@@ -171,13 +171,11 @@
     </dependency>
 
     <!-- AOP切面 -->
-    <!--
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
       <version>1.8.5</version>
     </dependency>
-    -->
 
     <!-- MySQL -->
     <dependency>

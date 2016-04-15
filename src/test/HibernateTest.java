@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pojo.Role;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "/applicationContext.xml" })
+@ContextConfiguration({ "/spring-context.xml" })
 public class HibernateTest {
 
 	@Autowired
